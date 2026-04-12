@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Vokabeltests A1</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;overflow-x:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f4ef;min-height:100vh}
+
+/* START */
+#pgS{display:flex;flex-direction:column;align-items:center;padding:1.5rem 1rem;min-height:100vh}
+#pgS h1{font-size:4rem;font-weight:700;color:#1a1a2e;margin:.8rem 0 .3rem;text-align:center}
+.sub{color:#999;font-style:italic;margin-bottom:1.5rem;font-size:1.2rem;text-align:center}
+#menu{width:100%}
+.card{width:100%;background:#fff;border-radius:14px;padding:1.4rem 1.2rem;margin:.55rem 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.08);border-left:5px solid #3a86ff;-webkit-tap-highlight-color:rgba(0,0,0,.05)}
+.card:active{opacity:.8}
+.card.boss{border-left-color:#e63946}
+.ct{font-size:1.7rem;font-weight:700;color:#1a1a2e}
+.cm{font-size:1.1rem;color:#999;margin-top:.15rem}
+.arr{font-size:1.4rem;color:#3a86ff;flex-shrink:0}
+.boss .arr{color:#e63946}
+
+/* NAME */
+#pgN{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem 1rem}
+#pgN h2{font-size:2rem;color:#1a1a2e;margin-bottom:.4rem;text-align:center}
+#pgN p{color:#888;font-size:1rem;margin-bottom:1.5rem;text-align:center}
+.nbox{width:82%;max-width:340px;background:#fff;border-radius:14px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.ninp{width:100%;border:2px solid #ddd;border-radius:10px;padding:.9rem 1rem;font-size:16px;font-family:-apple-system,sans-serif;outline:none;margin-bottom:1rem;-webkit-appearance:none;display:block}
+.ninp:focus{border-color:#3a86ff}
+.nstart{width:100%;background:#3a86ff;color:#fff;border:none;border-radius:10px;padding:.95rem;font-size:1.05rem;font-family:-apple-system,sans-serif;cursor:pointer}
+.nstart.boss{background:#e63946}
+.nback{display:block;width:100%;background:none;border:none;color:#aaa;font-size:.9rem;margin-top:.8rem;text-decoration:underline;text-align:center;cursor:pointer;padding:.3rem;font-family:-apple-system,sans-serif}
+
+/* TEST */
+#pgT{display:none}
+.hdr{background:#1a1a2e;color:#fff;padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;width:100%}
+.htl{font-size:.88rem;font-weight:700;flex:1;margin-right:.5rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hrt{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+.prg{font-size:.82rem;color:#aaa}
+.bbk{background:none;border:1px solid #555;color:#ccc;border-radius:6px;padding:.28rem .65rem;cursor:pointer;font-size:.8rem;font-family:-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
+.wrap{width:100%;padding:.7rem .8rem 6rem}
+.q{background:#fff;border-radius:10px;padding:.8rem .9rem;margin:.5rem 0;box-shadow:0 1px 4px rgba(0,0,0,.06);width:100%}
+.qhead{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.4rem}
+.qn{font-size:.75rem;color:#bbb;flex-shrink:0}
+.qen{font-style:italic;color:#1a1a2e;font-size:.95rem;flex:1}
+.qi{width:100%;border:none;border-bottom:2px solid #ddd;padding:.4rem 0;font-size:16px;font-family:-apple-system,sans-serif;background:transparent;outline:none;-webkit-appearance:none;appearance:none;display:block}
+.qi:focus{border-color:#3a86ff}
+.qi.ok{border-color:#2dc653;background:#f0fff4;color:#186a2e;padding:.4rem .4rem;border-radius:6px 6px 0 0}
+.qi.er{border-color:#e63946;background:#fff5f5;color:#b02030;padding:.4rem .4rem;border-radius:6px 6px 0 0}
+.qi.sk{color:#bbb;font-style:italic}
+.ht{font-size:.8rem;display:none;padding:.15rem 0;color:#888}
+.ht.ok{color:#2dc653;display:block}
+.ht.er{color:#e63946;display:block}
+.bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eee;padding:.9rem 1rem;text-align:center;box-shadow:0 -2px 12px rgba(0,0,0,.07)}
+.bsb{background:#3a86ff;color:#fff;border:none;border-radius:12px;padding:.95rem 2rem;font-size:1.05rem;font-family:-apple-system,sans-serif;cursor:pointer;width:100%;max-width:380px;min-height:50px;-webkit-tap-highlight-color:transparent}
+.bsb.boss{background:#e63946}
+
+/* RESULT */
+.rbx{background:#fff;border-radius:14px;padding:1.5rem 1.2rem;text-align:center;margin:.5rem 0;box-shadow:0 2px 16px rgba(0,0,0,.09)}
+.rname{font-size:.95rem;color:#888;margin-bottom:.3rem}
+.sc{font-size:3rem;font-weight:700;color:#3a86ff;line-height:1}
+.sc.boss{color:#e63946}
+.sp{font-size:.9rem;color:#666;margin:.4rem 0}
+.nbox2{margin:.8rem 0;padding:.9rem 1.2rem;border-radius:12px;width:100%}
+.nbox2.pass{background:#f0fff4;border:2px solid #2dc653}
+.nbox2.fail{background:#fff5f5;border:2px solid #e63946}
+.nrow{display:flex;align-items:center;justify-content:center;gap:1rem}
+.nnum{font-size:2.2rem;font-weight:700}
+.nnum.pass{color:#186a2e}
+.nnum.fail{color:#b02030}
+.nlbl{font-size:1rem;color:#555}
+.nsts{font-size:1rem;font-weight:700;margin-top:.2rem}
+.nsts.pass{color:#186a2e}
+.nsts.fail{color:#b02030}
+.eml{font-size:.8rem;color:#aaa;margin:.4rem 0}
+.brt{background:#1a1a2e;color:#fff;border:none;border-radius:10px;padding:.8rem 1.5rem;font-size:.95rem;font-family:-apple-system,sans-serif;cursor:pointer;margin-top:.8rem;width:100%;-webkit-tap-highlight-color:transparent}
+</style>
+</head>
+<body>
+
+<div id="pgS">
+  <h1>Vokabeltests A1</h1>
+  <p class="sub">Goethe-Zertifikat &mdash; Englisch &rarr; Deutsch</p>
+  <div id="menu"></div>
+</div>
+
+<div id="pgN">
+  <h2 id="nTitle"></h2>
+  <p>Bitte deinen Namen eingeben</p>
+  <div class="nbox">
+    <input class="ninp" id="ninp" type="text" placeholder="Vor- und Nachname..."
+      autocomplete="new-password" autocorrect="off" autocapitalize="words" spellcheck="false">
+    <button class="nstart" id="nstart" onclick="startMitName()">Test starten &rarr;</button>
+    <button class="nback" onclick="goHome()">&#8592; Zur&uuml;ck</button>
+  </div>
+</div>
+
+<div id="pgT">
+  <div class="hdr">
+    <span class="htl" id="ttl"></span>
+    <div class="hrt">
+      <span class="prg" id="prg"></span>
+      <button class="bbk" onclick="goHome()">&#8592; Zur&uuml;ck</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div id="qs"></div>
+    <div id="rb"></div>
+  </div>
+  <div class="bar" id="bar">
+    <button class="bsb" id="bsb" onclick="auswerten()">Auswerten &rarr;</button>
+  </div>
+</div>
+
+<script>
+var TESTS=[{"id": 1, "titel": "Vokabeltest 1", "v": [["die Arbeit", "the work"], ["öffnen", "to open"], ["bar", "cash"], ["die Mutter", "the mother"], ["vielleicht", "maybe"], ["die Tasche", "the bag"], ["einkaufen", "to shop"], ["bleiben", "to stay"], ["das Brot", "the bread"], ["der Urlaub", "the holiday"], ["der Salat", "the salad"], ["die Bäckerei", "the bakery"], ["kaputt", "broken"], ["der Test", "the test"], ["machen", "to make"], ["das Ausland", "abroad"], ["rauchen", "to smoke"], ["die Anrede", "the salutation"], ["dauern", "to last"], ["dort", "there"], ["anmachen", "to switch on"], ["möchten", "would like"], ["der Laden", "the shop"], ["bekannt", "well-known"], ["das Dorf", "the village"], ["neu", "new"], ["das Bild", "the picture"]]}, {"id": 2, "titel": "Vokabeltest 2", "v": [["bis", "until"], ["die Toilette", "the toilet"], ["bekommen", "to receive"], ["das Bein", "the leg"], ["die Eltern", "the parents"], ["ausmachen", "to switch off"], ["die Pause", "the break"], ["also", "so / therefore"], ["die Miete", "the rent"], ["der Ausgang", "the exit"], ["einfach", "easy"], ["bald", "soon"], ["zahlen", "to pay"], ["die Banane", "the banana"], ["das Ei", "the egg"], ["der Preis", "the price"], ["das Fleisch", "the meat"], ["lesen", "to read"], ["allein", "alone"], ["das Café", "the café"], ["ohne", "without"], ["baden", "to bathe"], ["arbeitslos", "unemployed"], ["das Gemüse", "the vegetables"], ["die Frau", "the woman"], ["schlafen", "to sleep"], ["haben", "to have"]]}, {"id": 3, "titel": "Vokabeltest 3", "v": [["der Sohn", "the son"], ["klein", "small"], ["die Party", "the party"], ["mehr", "more"], ["das Buch", "the book"], ["auf", "on"], ["die Firma", "the company"], ["der Tee", "the tea"], ["die Milch", "the milk"], ["anrufen", "to call"], ["der Arzt", "the doctor"], ["arbeiten", "to work"], ["Achtung!", "Attention!"], ["jung", "young"], ["ein", "a / one"], ["die Rechnung", "the bill"], ["der Kaffee", "the coffee"], ["oben", "above"], ["die Farbe", "the colour"], ["der Gast", "the guest"], ["alt", "old"], ["das Hotel", "the hotel"], ["fragen", "to ask"], ["die Abfahrt", "the departure"], ["anfangen", "to begin"], ["dann", "then"]]}, {"id": 4, "titel": "Vokabeltest 4", "v": [["schließen", "to close"], ["sehen", "to see"], ["der Bahnhof", "the station"], ["lernen", "to learn"], ["die Uhr", "the clock"], ["die Schule", "the school"], ["finden", "to find"], ["abfahren", "to depart"], ["die Adresse", "the address"], ["zwischen", "between"], ["die Prüfung", "the exam"], ["das Glas", "the glass"], ["der Pass", "the passport"], ["der Balkon", "the balcony"], ["das Haus", "the house"], ["bitte", "please"], ["viel", "much"], ["beginnen", "to begin"], ["helfen", "to help"], ["die Auskunft", "the information"], ["durch", "through"], ["der Beruf", "the profession"], ["der Ausländer", "the foreigner"], ["das Internet", "the internet"], ["dürfen", "may"], ["die Flasche", "the bottle"]]}, {"id": 5, "titel": "Vokabeltest 5", "v": [["aber", "but"], ["abholen", "to pick up"], ["die Ankunft", "the arrival"], ["das Licht", "the light"], ["nicht", "not"], ["das Bad", "the bathroom"], ["krank", "ill"], ["sein", "to be"], ["stehen", "to stand"], ["der Fahrer", "the driver"], ["wohnen", "to live"], ["der Fisch", "the fish"], ["draußen", "outside"], ["aus", "out / from"], ["der Ausflug", "the trip"], ["der Fehler", "the mistake"], ["die Karte", "the card"], ["aufstehen", "to get up"], ["bezahlen", "to pay"], ["das Kino", "the cinema"], ["klar", "sure"], ["die Anmeldung", "the registration"], ["das Taxi", "the taxi"], ["dein", "your"], ["der Mann", "the man"], ["der Partner", "the partner"]]}, {"id": 6, "titel": "Vokabeltest 6", "v": [["frei", "free"], ["der Vater", "the father"], ["noch", "still"], ["die Autobahn", "the motorway"], ["kommen", "to come"], ["die Freizeit", "the free time"], ["die Antwort", "the answer"], ["die Polizei", "the police"], ["verkaufen", "to sell"], ["dir", "to you"], ["oder", "or"], ["die E-Mail", "the email"], ["die Hilfe", "the help"], ["mit", "with"], ["groß", "big"], ["aufhören", "to stop"], ["das Wasser", "the water"], ["das Ticket", "the (event) ticket"], ["wichtig", "important"], ["anbieten", "to offer"], ["das Kind", "the child"], ["das Baby", "the baby"], ["geben", "to give"], ["der Job", "the job"], ["der Anruf", "the call"], ["das Glück", "the luck"]]}, {"id": 7, "titel": "Vokabeltest 7", "v": [["an", "at / on"], ["ab", "from"], ["einladen", "to invite"], ["das Haar", "the hair"], ["der Bauch", "the stomach"], ["die Aufgabe", "the task"], ["die Küche", "the kitchen"], ["sprechen", "to speak"], ["das Papier", "the paper"], ["die Ecke", "the corner"], ["der Garten", "the garden"], ["das Ende", "the end"], ["das Getränk", "the drink"], ["anmelden", "to register"], ["der Bruder", "the brother"], ["der Bus", "the bus"], ["der Hunger", "the hunger"], ["leben", "to live"], ["die Dusche", "the shower"], ["bedeuten", "to mean"], ["immer", "always"], ["das Restaurant", "the restaurant"], ["danken", "to thank"], ["nichts", "nothing"], ["das Auto", "the car"], ["denn", "because"]]}, {"id": 8, "titel": "Vokabeltest 8", "v": [["die Sonne", "the sun"], ["die Post", "the post office"], ["die Bank", "the bank / bench"], ["der Freund", "the friend"], ["das Zimmer", "the room"], ["verstehen", "to understand"], ["entschuldigen", "to excuse"], ["billig", "cheap"], ["die Ehefrau", "the wife"], ["morgen", "tomorrow"], ["der Doktor", "the doctor"], ["der Baum", "the tree"], ["beide", "both"], ["kaufen", "to buy"], ["bei", "at"], ["der Film", "the film"], ["die Reise", "the trip"], ["das Geld", "the money"], ["das Geschenk", "the present"], ["die Information", "the information"], ["oft", "often"], ["der Zug", "the train"], ["der Hund", "the dog"], ["glauben", "to believe"], ["schön", "beautiful"], ["teuer", "expensive"]]}, {"id": 9, "titel": "Vokabeltest 9", "v": [["der Kopf", "the head"], ["das Land", "the country"], ["das Alter", "the age"], ["das Meer", "the sea"], ["die Stadt", "the city"], ["die Zeit", "the time"], ["das Feuer", "the fire"], ["der Absender", "the sender"], ["warten", "to wait"], ["da", "there"], ["heute", "today"], ["das Datum", "the date"], ["der Bahnsteig", "the platform"], ["die Butter", "the butter"], ["ich", "I"], ["abgeben", "to hand in"], ["sagen", "to say"], ["trinken", "to drink"], ["alle", "all"], ["Rad fahren", "to cycle"], ["der Eingang", "the entrance"], ["das Fahrrad", "the bicycle"], ["zusammen", "together"], ["ankreuzen", "to tick"], ["das Bier", "the beer"], ["eilig", "in a hurry"]]}, {"id": 10, "titel": "Vokabeltest 10", "v": [["der Name", "the name"], ["das Telefon", "the telephone"], ["die Disco", "the disco"], ["das Angebot", "the offer"], ["der Platz", "the place"], ["essen", "to eat"], ["die Familie", "the family"], ["die Fahrkarte", "the train ticket"], ["die Jacke", "the jacket"], ["können", "can"], ["das Beispiel", "the example"], ["müde", "tired"], ["der Computer", "the computer"], ["auch", "also"], ["drucken", "to print"], ["benutzen", "to use"], ["die Bahn", "the train"], ["kochen", "to cook"], ["der Ehemann", "the husband"], ["ankommen", "to arrive"], ["ausfüllen", "to fill in"], ["das Konto", "the account"], ["kosten", "to cost"], ["anklicken", "to click"], ["der Anfang", "the beginning"], ["lang", "long"]]}, {"id": 11, "titel": "Endgegner – Alle 262 Vokabeln", "v": [["jung", "young"], ["das Ausland", "abroad"], ["der Fahrer", "the driver"], ["die Disco", "the disco"], ["das Auto", "the car"], ["das Bier", "the beer"], ["der Mann", "the man"], ["der Bruder", "the brother"], ["die Antwort", "the answer"], ["verstehen", "to understand"], ["das Beispiel", "the example"], ["das Buch", "the book"], ["das Getränk", "the drink"], ["müde", "tired"], ["der Kaffee", "the coffee"], ["die Mutter", "the mother"], ["die Miete", "the rent"], ["die Information", "the information"], ["das Angebot", "the offer"], ["da", "there"], ["der Partner", "the partner"], ["oben", "above"], ["die Farbe", "the colour"], ["die Anrede", "the salutation"], ["das Café", "the café"], ["immer", "always"], ["das Haus", "the house"], ["stehen", "to stand"], ["der Bahnhof", "the station"], ["einkaufen", "to shop"], ["aufstehen", "to get up"], ["anklicken", "to click"], ["der Garten", "the garden"], ["dort", "there"], ["das Baby", "the baby"], ["die Dusche", "the shower"], ["die Abfahrt", "the departure"], ["die Ecke", "the corner"], ["groß", "big"], ["bleiben", "to stay"], ["die Milch", "the milk"], ["verkaufen", "to sell"], ["zwischen", "between"], ["die Firma", "the company"], ["Achtung!", "Attention!"], ["geben", "to give"], ["die Hilfe", "the help"], ["das Bad", "the bathroom"], ["das Bild", "the picture"], ["mehr", "more"], ["fragen", "to ask"], ["zusammen", "together"], ["der Film", "the film"], ["viel", "much"], ["alt", "old"], ["anfangen", "to begin"], ["dein", "your"], ["der Bauch", "the stomach"], ["das Papier", "the paper"], ["anrufen", "to call"], ["alle", "all"], ["der Preis", "the price"], ["die Arbeit", "the work"], ["das Datum", "the date"], ["neu", "new"], ["bezahlen", "to pay"], ["die Rechnung", "the bill"], ["das Ticket", "the (event) ticket"], ["die Schule", "the school"], ["klar", "sure"], ["aufhören", "to stop"], ["bedeuten", "to mean"], ["der Zug", "the train"], ["das Alter", "the age"], ["die Fahrkarte", "the train ticket"], ["der Beruf", "the profession"], ["rauchen", "to smoke"], ["wohnen", "to live"], ["der Tee", "the tea"], ["billig", "cheap"], ["benutzen", "to use"], ["die Bahn", "the train"], ["das Brot", "the bread"], ["das Glück", "the luck"], ["aus", "out / from"], ["abfahren", "to depart"], ["das Fahrrad", "the bicycle"], ["aber", "but"], ["schön", "beautiful"], ["das Meer", "the sea"], ["das Telefon", "the telephone"], ["der Balkon", "the balcony"], ["die Reise", "the trip"], ["der Baum", "the tree"], ["bis", "until"], ["die Banane", "the banana"], ["durch", "through"], ["die Adresse", "the address"], ["beide", "both"], ["kaufen", "to buy"], ["nicht", "not"], ["die Karte", "the card"], ["die Ehefrau", "the wife"], ["lernen", "to learn"], ["zahlen", "to pay"], ["bekommen", "to receive"], ["die Party", "the party"], ["drucken", "to print"], ["die Zeit", "the time"], ["das Licht", "the light"], ["der Bahnsteig", "the platform"], ["das Konto", "the account"], ["vielleicht", "maybe"], ["krank", "ill"], ["bekannt", "well-known"], ["die Bäckerei", "the bakery"], ["teuer", "expensive"], ["noch", "still"], ["die E-Mail", "the email"], ["dir", "to you"], ["arbeitslos", "unemployed"], ["die Familie", "the family"], ["anmelden", "to register"], ["die Flasche", "the bottle"], ["nichts", "nothing"], ["die Küche", "the kitchen"], ["baden", "to bathe"], ["morgen", "tomorrow"], ["Rad fahren", "to cycle"], ["kaputt", "broken"], ["bar", "cash"], ["der Gast", "the guest"], ["der Freund", "the friend"], ["dauern", "to last"], ["ohne", "without"], ["oft", "often"], ["das Wasser", "the water"], ["einladen", "to invite"], ["auf", "on"], ["ausfüllen", "to fill in"], ["sehen", "to see"], ["haben", "to have"], ["einfach", "easy"], ["anbieten", "to offer"], ["die Post", "the post office"], ["lesen", "to read"], ["das Hotel", "the hotel"], ["das Feuer", "the fire"], ["das Bein", "the leg"], ["das Dorf", "the village"], ["die Eltern", "the parents"], ["dürfen", "may"], ["sagen", "to say"], ["der Ehemann", "the husband"], ["die Aufgabe", "the task"], ["danken", "to thank"], ["die Prüfung", "the exam"], ["ausmachen", "to switch off"], ["sprechen", "to speak"], ["die Polizei", "the police"], ["arbeiten", "to work"], ["entschuldigen", "to excuse"], ["trinken", "to drink"], ["machen", "to make"], ["essen", "to eat"], ["das Land", "the country"], ["der Vater", "the father"], ["also", "so / therefore"], ["die Uhr", "the clock"], ["beginnen", "to begin"], ["glauben", "to believe"], ["an", "at / on"], ["dann", "then"], ["der Ausgang", "the exit"], ["die Stadt", "the city"], ["das Haar", "the hair"], ["lang", "long"], ["eilig", "in a hurry"], ["die Jacke", "the jacket"], ["der Computer", "the computer"], ["der Fehler", "the mistake"], ["das Fleisch", "the meat"], ["die Tasche", "the bag"], ["die Toilette", "the toilet"], ["der Urlaub", "the holiday"], ["das Zimmer", "the room"], ["ich", "I"], ["das Taxi", "the taxi"], ["die Butter", "the butter"], ["das Kind", "the child"], ["sein", "to be"], ["das Ei", "the egg"], ["warten", "to wait"], ["der Name", "the name"], ["die Pause", "the break"], ["kosten", "to cost"], ["der Test", "the test"], ["ankreuzen", "to tick"], ["der Job", "the job"], ["das Gemüse", "the vegetables"], ["frei", "free"], ["abgeben", "to hand in"], ["anmachen", "to switch on"], ["kommen", "to come"], ["der Pass", "the passport"], ["schlafen", "to sleep"], ["die Ankunft", "the arrival"], ["öffnen", "to open"], ["oder", "or"], ["ankommen", "to arrive"], ["der Salat", "the salad"], ["das Internet", "the internet"], ["schließen", "to close"], ["der Ausflug", "the trip"], ["können", "can"], ["bei", "at"], ["der Bus", "the bus"], ["auch", "also"], ["denn", "because"], ["möchten", "would like"], ["finden", "to find"], ["mit", "with"], ["der Absender", "the sender"], ["allein", "alone"], ["das Ende", "the end"], ["draußen", "outside"], ["bald", "soon"], ["der Sohn", "the son"], ["der Hunger", "the hunger"], ["heute", "today"], ["die Auskunft", "the information"], ["der Kopf", "the head"], ["bitte", "please"], ["das Geld", "the money"], ["der Eingang", "the entrance"], ["das Geschenk", "the present"], ["klein", "small"], ["wichtig", "important"], ["der Anruf", "the call"], ["die Sonne", "the sun"], ["abholen", "to pick up"], ["die Frau", "the woman"], ["das Kino", "the cinema"], ["ab", "from"], ["der Platz", "the place"], ["kochen", "to cook"], ["die Freizeit", "the free time"], ["das Restaurant", "the restaurant"], ["leben", "to live"], ["die Autobahn", "the motorway"], ["helfen", "to help"], ["die Bank", "the bank / bench"], ["der Arzt", "the doctor"], ["der Laden", "the shop"], ["der Anfang", "the beginning"], ["ein", "a / one"], ["die Anmeldung", "the registration"], ["der Fisch", "the fish"], ["das Glas", "the glass"], ["der Ausländer", "the foreigner"], ["der Doktor", "the doctor"], ["der Hund", "the dog"]]}];
+var cur=null,done=false,name_='';
+
+function buildMenu(){
+  var m=document.getElementById('menu');
+  m.innerHTML='';
+  TESTS.forEach(function(t,i){
+    var boss=t.id===11;
+    var c=document.createElement('div');
+    c.className='card'+(boss?' boss':'');
+    c.innerHTML='<div><div class="ct">'+(boss?'&#127942; ':'')+t.titel+'</div><div class="cm">'+t.v.length+' Vokabeln</div></div><span class="arr">&#8594;</span>';
+    c.onclick=function(){zeigeN(i);};
+    m.appendChild(c);
+  });
+}
+
+function goHome(){
+  document.getElementById('pgS').style.display='flex';
+  document.getElementById('pgN').style.display='none';
+  document.getElementById('pgT').style.display='none';
+  cur=null;done=false;name_='';
+}
+
+function zeigeN(idx){
+  cur=TESTS[idx];
+  var boss=cur.id===11;
+  document.getElementById('nTitle').textContent=cur.titel;
+  document.getElementById('nstart').className='nstart'+(boss?' boss':'');
+  document.getElementById('ninp').value='';
+  document.getElementById('ninp').style.borderColor='#ddd';
+  document.getElementById('pgS').style.display='none';
+  document.getElementById('pgN').style.display='flex';
+}
+
+function startMitName(){
+  var n=document.getElementById('ninp').value.trim();
+  if(!n){document.getElementById('ninp').style.borderColor='#e63946';return;}
+  name_=n;
+  document.getElementById('pgN').style.display='none';
+  goTest();
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&document.getElementById('pgN').style.display==='flex')startMitName();
+});
+
+function goTest(){
+  var boss=cur.id===11;
+  done=false;
+  document.getElementById('pgT').style.display='block';
+  document.getElementById('ttl').textContent=cur.titel+' — '+name_;
+  document.getElementById('bsb').className='bsb'+(boss?' boss':'');
+  document.getElementById('bar').style.display='block';
+  document.getElementById('rb').innerHTML='';
+  var qs=document.getElementById('qs');
+  qs.innerHTML='';
+  cur.v.forEach(function(vok,i){
+    var d=document.createElement('div');
+    d.className='q';
+    d.innerHTML=
+      '<div class="qhead"><span class="qn">'+(i+1)+'.</span><span class="qen">'+vok[1]+'</span></div>'+
+      '<input class="qi" id="q'+i+'" type="text" placeholder="Deutsches Wort..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">'+
+      '<span class="ht" id="h'+i+'"></span>';
+    qs.appendChild(d);
+    (function(idx){
+      var inp=document.getElementById('q'+idx);
+      inp.addEventListener('input',upd);
+      inp.addEventListener('keydown',function(e){
+        if(e.key==='Enter'){
+          e.preventDefault();
+          var n=document.getElementById('q'+(idx+1));
+          if(n){n.focus();n.scrollIntoView({behavior:'smooth',block:'center'});}
+        }
+      });
+    })(i);
+  });
+  upd();
+  window.scrollTo(0,0);
+}
+
+function upd(){
+  if(!cur)return;
+  var f=0;
+  cur.v.forEach(function(v,i){var e=document.getElementById('q'+i);if(e&&e.value.trim())f++;});
+  document.getElementById('prg').textContent=f+' / '+cur.v.length;
+}
+
+function norm(s){return s.trim().toLowerCase().replace(/\s+/g,' ');}
+
+function getNote(pct){
+  if(pct>=95)return{n:'1',l:'Sehr gut',pass:true};
+  if(pct>=85)return{n:'2',l:'Gut',pass:true};
+  if(pct>=78)return{n:'3',l:'Befriedigend',pass:true};
+  if(pct>=70)return{n:'4',l:'Ausreichend',pass:true};
+  if(pct>=50)return{n:'5',l:'Mangelhaft',pass:false};
+  return{n:'6',l:'Ungenügend',pass:false};
+}
+
+function auswerten(){
+  if(done)return;done=true;
+  var ok=0,wrong=0,skip=0,fehler=[];
+  cur.v.forEach(function(vok,i){
+    var inp=document.getElementById('q'+i);
+    var ht=document.getElementById('h'+i);
+    var ans=inp.value.trim();
+    var exp=vok[0];
+    inp.readOnly=true;
+    if(!ans){
+      skip++;inp.value='---';inp.className='qi sk';
+      ht.textContent='→ '+exp;ht.className='ht er';
+      fehler.push({en:vok[1],antwort:'(leer)',richtig:exp});
+    }else if(norm(ans)===norm(exp)){
+      ok++;inp.className='qi ok';
+      ht.textContent='✓ Richtig!';ht.className='ht ok';
+    }else{
+      wrong++;inp.className='qi er';
+      ht.textContent='→ '+exp;ht.className='ht er';
+      fehler.push({en:vok[1],antwort:ans,richtig:exp});
+    }
+  });
+  var tot=cur.v.length,pct=Math.round(ok/tot*100),note=getNote(pct),boss=cur.id===11;
+  document.getElementById('bar').style.display='none';
+  var rb=document.getElementById('rb');
+  rb.innerHTML=
+    '<div class="rbx">'+
+    '<div class="rname">'+name_+'</div>'+
+    '<div class="sc'+(boss?' boss':'')+'">'+ok+' / '+tot+'</div>'+
+    '<div class="sp">'+pct+'% &middot; '+wrong+' falsch &middot; '+skip+' übersprungen</div>'+
+    '<div class="nbox2 '+(note.pass?'pass':'fail')+'">'+
+    '<div class="nrow"><div class="nnum '+(note.pass?'pass':'fail')+'">Note '+note.n+'</div>'+
+    '<div><div class="nlbl">'+note.l+'</div>'+
+    '<div class="nsts '+(note.pass?'pass':'fail')+'">'+(note.pass?'Bestanden ✓':'Nicht bestanden ✗')+'</div></div></div></div>'+
+    '<div class="eml" id="emlInfo">&#9993; Sende Ergebnis...</div>'+
+    '<button class="brt" onclick="goHome()">← Zurück zur Übersicht</button>'+
+    '</div>';
+  rb.scrollIntoView({behavior:'smooth'});
+  sendEmail(name_,cur.titel,ok,tot,pct,note,fehler,skip);
+}
+
+function sendEmail(name,test,ok,tot,pct,note,fehler,skip){
+  var body='Schüler: '+name+'\n';
+  body+='Test: '+test+'\n';
+  body+='Datum: '+new Date().toLocaleString('de-DE')+'\n\n';
+  body+='Punkte: '+ok+' / '+tot+'\n';
+  body+='Prozent: '+pct+'%\n';
+  body+='Note: '+note.n+' - '+note.l+'\n';
+  body+=(note.pass?'BESTANDEN':'NICHT BESTANDEN')+'\n\n';
+  if(fehler.length){
+    body+='Fehler ('+fehler.length+'):\n';
+    fehler.forEach(function(f,i){
+      body+=(i+1)+'. '+f.en+'\n   Antwort: "'+f.antwort+'" | Richtig: "'+f.richtig+'"\n';
+    });
+  }
+  if(skip) body+='\nÜbersprungen: '+skip;
+
+  emailjs.send('service_vokabel','template_vokabel',{
+    to_email:'edvin.matacic@gmail.com',
+    subject:'Vokabeltest: '+name+' - '+test+' - Note '+note.n,
+    message:body,
+    from_name:name
+  }).then(function(){
+    var e=document.getElementById('emlInfo');
+    if(e)e.textContent='✓ Ergebnis an Lehrer gesendet';
+  }).catch(function(){
+    var e=document.getElementById('emlInfo');
+    if(e)e.textContent='(E-Mail-Versand nicht konfiguriert)';
+  });
+}
+
+buildMenu();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('YOUR_PUBLIC_KEY');</script>
+</body>
+</html>
